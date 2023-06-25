@@ -1,0 +1,39 @@
+{%extends 'base.html'%}{% block content %}
+
+
+
+<div class="container  rounded p-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6 ">
+        <div class="card border-primary rounded p-4">
+          <div class="card-body">
+            <h1 class="card-title">Add Blog</h1>
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="user" value="{{ request.user.id }}">
+      <input type="text" name="name">
+      <input type="text" name="description">
+      
+      <select name="category">
+        {% for i in category %}
+        <option value="{{ i.id }}">{{i.name}}</option>
+        {% endfor %}
+      </select>
+      <input type="file" name="image">
+              <button type="submit" class="btn btn-primary" onclick="fun()" >Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function fun(){
+      alert("Submited")
+    }
+  </script>
+  
+
+
+{% endblock %}

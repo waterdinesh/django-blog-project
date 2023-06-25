@@ -1,0 +1,60 @@
+{% load static %}
+<style>
+  .card {
+    width: 400px;
+    border: 1px solid blue;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+
+  .card-header {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0069d9;
+    color: #fff;
+  }
+</style>
+
+<div class="card m-5 border-primary allb" style="width: 400px; border:1px solid blue">
+  <div class="card-header">
+    <h4 class="card-title">Update blog</h4>
+  </div>
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ category_form.as_p }}
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+
+

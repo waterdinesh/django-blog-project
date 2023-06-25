@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+{% extends 'base.html' %} {% load static%}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Page Title</title>
+    <!-- Add your CSS and JavaScript files here -->
+    <link rel="stylesheet" href="{%static 'css/home.css' %}" />
+    <link rel="stylesheet" href="{%static 'javascript/home.js' %}" />
+    <link rel="stylesheet" href="path/to/your/styles.css" />
+    <script src="path/to/your/script.js"></script>
+  </head>
+  <style>
+    .custom-input {
+      width: 100px;
+    }
+
+    .custom-row {
+      background-color: #f2f2f2;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .spinning-icon {
+      animation: spin 2s infinite linear;
+    }
+
+    
+  </style>
+
+  <body>
+    <header>
+      <!-- Your header content goes here -->
+    </header>
+
+    <nav>
+      <!-- Your navigation menu goes here -->
+    </nav>
+
+    <main>
+      {% block content %}
+     <h1 style="padding-left:30%" class="animate-charcter">VIEW THE BLOG WEBSITE</h1>
+
+
+      {% if message %}
+      <div class="alert alert-info">{{ message }}</div>
+      {% endif %}
+
+      <div class="d-flex p-5">
+        <div class="card-container d-flex flex-wrap w-75">
+          {% for addblogy in addblog %}
+          <div
+            class="card m-3 border-primary"
+            style="width: 400px; height: 500px"
+          >
+            {% if addblogy.image %}
+            <img
+              src="{{ addblogy.image.url }}"
+              class="card-img-top"
+              alt="..."
+              style="width: 100%; height: 200px"
+            />
+            {% else %}
+            <p>No image uploaded for {{ addblogy.name }}</p>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title adc">{{ addblogy.name }}</h5>
+              <h5 class="card-title adc">{{ addblogy.user }}</h5>
+              <p class="card-text">{{ addblogy.description }}</p>
+              <h4
+                class="card-text border bg-info d-inline-block py-2 px-3 rounded text-white"
+              >
+                {{ addblogy.category }}
+              </h4>
+              <a
+                href="{% url 'delete_addblog' addblogy.id %}"
+                class="btn btn-primary"
+                
+              >
+                <i class="fa fa-trash" style="font-size: 20px; color: red"></i>
+              </a>
+              <a
+                href="{% url 'update_addblog' addblogy.id %}"
+                class="btn btn-primary"
+              >
+                <i
+                  class="fa fa-pencil-square-o"
+                  style="font-size: 20px; color: red"
+                ></i>
+              </a>
+              <div>
+                <a
+                  href="{% url 'show_detail' addblogy.id %}"
+                  class="btn btn-primary"
+                >
+                  Show Detail
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="table-responsive w-25" style="width: 300px; height: 1000px">
+          <form class="input-group" action="{% url 'search' %}" method="GET">
+            <input
+              type="text"
+              name="search"
+              class="form-control custom-input"
+              placeholder="Search Name"
+              style="width: 100px"
+            />
+            <div class="input-group-append">
+              <button type="submit" class="input-group-text">
+                <i class="ti-search"></i>Search
+              </button>
+            </div>
+          </form>
+
+          <table class="table table-bordered ">
+            <thead>
+              <tr>
+               <th id="qetu">Category</th>
+                {% comment %} <th>no of Count</th> {% endcomment %}
+              </tr>
+            </thead>
+            <tbody >
+              {% for caty in category %}
+              <tr>
+                <td class="d-flex" style="display: flex; justify-content: space-between;">
+                <p>{{ caty.name }}</p>
+                <p style="background-color: red; color: white;border-radius: 50%;text-align: center; width: 30px;height: 30px;">{{ caty.blog_count }}</p>
+                </td>
+               {% comment %} <td style="background-color: red; color: white;">{{ caty.blog_count }}</td> {% endcomment %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <div>
+            <h1>latest post</h1>
+            {% for laty in latestposts %}
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 280px;
+                border: 1px solid blue;
+                align-items: center;
+                margin: 9px 0px 0px 0px;
+                padding: 10px;
+              "
+            >
+              <p>{{ laty.name }}</p>
+              <p>{{laty.date}}</p>
+              <img
+                src="{{ laty.image.url }}"
+                class="card-img-top ml-2"
+                alt="..."
+                style="width: 50px; height: 50px; margin-left: 10px !important"
+              />
+            </div>
+           
+
+            {% endfor %}
+          </div>
+
+          <div class="" style="margin: 9px 0px 0px 0px; padding: 10px">
+            <div class="settingbox" onclick="settingk()">
+              <div style="border: 1px solid red; width: 100px">
+                <i
+                  class="fa fa-cogs spinning-icon"
+                  style="font-size: 50px; color: red; padding: 10px"
+                ></i>
+              </div>
+            </div>
+
+            <div class="remo" id="desoja">
+              <h3>style color</h3>
+              <button
+                onclick="funset1(this)"
+                style="
+                  background-color: red;
+                  color: red;
+                  /* border-radius: 50%; */
+                  border: none;
+                  width: 50px;
+                  height: 20px;
+                "
+              >
+                red
+              </button>
+              <button
+                onclick="funset1(this)"
+                style="
+                  background-color: rgb(43, 0, 255);
+                  color: rgb(43, 0, 255);
+                  /* border-radius: 50%; */
+                  border: none;
+                 width: 50px;
+                  height: 20px;
+                "
+              >
+                blue
+              </button>
+              <button
+                onclick="funset1(this)"
+                style="
+                  background-color: rgb(34, 255, 0);
+                  color: rgb(34, 255, 0);
+                  /* border-radius: 50%; */
+                  border: none;
+                   width: 50px;
+                  height: 20px;
+                "
+              >
+                green
+              </button>
+              <button
+                onclick="funset1(this)"
+                style="
+                  background-color: rgb(255, 247, 0);
+                  color: rgb(255, 247, 0);
+                  /* border-radius: 50%; */
+                  border: none;
+                  width: 50px;
+                  height: 20px;
+                "
+              >
+                yellow
+              </button>
+              <button
+                onclick="funset1(this)"
+                style="
+                  background-color: rgb(247, 23, 232);
+                  color: rgb(247, 23, 232);
+                  /* border-radius: 50%; */
+                  border: none;
+                  width: 50px;
+                  height: 20px;
+                "
+              >
+                pink
+              </button>
+              <!-- <input type="button" id="butsetopen" value="x" onclick="butsetclose"> -->
+            </div>
+            
+          </div>
+          
+          
+
+
+
+        </div>
+      </div>
+
+      <!-- Pagination links -->
+      <div class="pagination p-5">
+  <nav aria-label="...">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">&laquo; first</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">&laquo; first</span>
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link">previous</span>
+      </li>
+      {% endif %}
+
+      {% for page in page_obj.paginator.page_range %}
+      {% if page == page_obj.number %}
+      <li class="page-item active" aria-current="page">
+        <span class="page-link">{{ page }}</span>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">next</span>
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link">last &raquo;</span>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+
+    </main>
+  </body>
+  <script src="{% static 'home.js' %}"></script>
+
+<script>
+  function settingk() {
+    console.log('hi');
+     var o = document.getElementById("desoja");
+    // o.className=" demo"
+    if (o.className == "remo") {
+      o.className = "demo";
+    } else {
+      o.className = "remo";
+    }
+  }
+
+ function funset1(f){
+  console.log("colour")
+   var q = document.getElementById("qetu");
+        q.style.color = f.innerHTML;
+   var s = document.getElementsByClassName("adc")[0];
+  if (s) {
+    s.style.color = f.innerHTML;
+  }
+   var s = document.getElementsByClassName("adc")[1];
+  if (s) {
+    s.style.color = f.innerHTML;
+  }
+   var s = document.getElementsByClassName("adc")[2];
+  if (s) {
+    s.style.color = f.innerHTML;
+  }
+   var s = document.getElementsByClassName("adc")[3];
+  if (s) {
+    s.style.color = f.innerHTML;
+  }
+   var s = document.getElementsByClassName("adc")[4];
+  if (s) {
+    s.style.color = f.innerHTML;
+  }
+ }
+
+
+
+
+
+
+
+</script>
+  
+ 
+  {% endblock %}
+</html>
